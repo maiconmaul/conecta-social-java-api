@@ -1,0 +1,35 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: conecta-social-db
+    environment:
+      POSTGRES_DB: conecta_social
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - conecta-network
+
+  app:
+    build: .
+    container_name: conecta-social-api
+    ports:
+      - "3001:3001"
+    environment:
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      JWT_SECRET: mySecretKey
+    depends_on:
+      - postgres
+    networks:
+      - conecta-network
+
+volumes:
+  postgres_data:
+
+networks:
+  conecta-network:
+    driver: bridge
