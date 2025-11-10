@@ -23,6 +23,9 @@ public class EventService {
     @Autowired
     private EventRepository eventRepository;
     
+    @Autowired
+    private InstagramEmbedService instagramEmbedService;
+    
     public EventResponse createEvent(CreateEventRequest request) {
         Event event = new Event();
         event.setName(request.getName());
@@ -30,13 +33,19 @@ public class EventService {
         event.setDate(request.getDate());
         event.setGreetingDescription(request.getGreetingDescription());
         event.setAttendance(request.getAttendance());
-        event.setEmbeddedInstagram(request.getEmbeddedInstagram());
+        
+        // Converte URL do Instagram em embed HTML se necessário
+        String embedded_instagram = request.getEmbedded_instagram();
+        if (embedded_instagram != null && !embedded_instagram.trim().isEmpty()) {
+            embedded_instagram = instagramEmbedService.getEmbedFromUrl(embedded_instagram);
+        }
+        event.setEmbedded_instagram(embedded_instagram);
+        
         event.setStatus(request.getStatus());
         event.setStreet(request.getStreet());
         event.setNeighborhood(request.getNeighborhood());
         event.setNumber(request.getNumber());
         event.setCity(request.getCity());
-        event.setUf(request.getUf());
         event.setState(request.getState());
         event.setCep(request.getCep());
         event.setComplement(request.getComplement());
@@ -64,8 +73,9 @@ public class EventService {
     
     @Transactional(readOnly = true)
     public List<EventResponse> getEventsWithInstagramLimit(int limit) {
-        return eventRepository.findActiveEventsWithInstagramLimit(limit)
+        return eventRepository.findActiveEventsWithInstagram()
                 .stream()
+                .limit(limit)
                 .map(EventResponse::new)
                 .collect(Collectors.toList());
     }
@@ -95,13 +105,19 @@ public class EventService {
         event.setDate(request.getDate());
         event.setGreetingDescription(request.getGreetingDescription());
         event.setAttendance(request.getAttendance());
-        event.setEmbeddedInstagram(request.getEmbeddedInstagram());
+        
+        // Converte URL do Instagram em embed HTML se necessário
+        String embedded_instagram = request.getEmbedded_instagram();
+        if (embedded_instagram != null && !embedded_instagram.trim().isEmpty()) {
+            embedded_instagram = instagramEmbedService.getEmbedFromUrl(embedded_instagram);
+        }
+        event.setEmbedded_instagram(embedded_instagram);
+        
         event.setStatus(request.getStatus());
         event.setStreet(request.getStreet());
         event.setNeighborhood(request.getNeighborhood());
         event.setNumber(request.getNumber());
         event.setCity(request.getCity());
-        event.setUf(request.getUf());
         event.setState(request.getState());
         event.setCep(request.getCep());
         event.setComplement(request.getComplement());
@@ -159,7 +175,12 @@ public class EventService {
             throw new RuntimeException("Evento inativo");
         }
         
-        event.setEmbeddedInstagram(request.getEmbeddedInstagram());
+        // Converte URL do Instagram em embed HTML se necessário
+        String embedded_instagram = request.getEmbedded_instagram();
+        if (embedded_instagram != null && !embedded_instagram.trim().isEmpty()) {
+            embedded_instagram = instagramEmbedService.getEmbedFromUrl(embedded_instagram);
+        }
+        event.setEmbedded_instagram(embedded_instagram);
         
         Event updatedEvent = eventRepository.save(event);
         return new EventResponse(updatedEvent);

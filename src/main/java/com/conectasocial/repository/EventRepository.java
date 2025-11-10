@@ -31,9 +31,9 @@ public interface EventRepository extends JpaRepository<Event, UUID> {
     @Query("SELECT e FROM Event e WHERE e.active = true AND e.date < :date")
     List<Event> findPastEvents(@Param("date") LocalDateTime date);
     
-    @Query("SELECT e FROM Event e WHERE e.active = true AND e.embeddedInstagram IS NOT NULL AND e.embeddedInstagram != '' ORDER BY e.date DESC")
+    @Query("SELECT e FROM Event e WHERE e.active = true AND e.embedded_instagram IS NOT NULL AND e.embedded_instagram != '' ORDER BY e.date DESC")
     List<Event> findActiveEventsWithInstagram();
     
-    @Query(value = "SELECT * FROM events WHERE active = true AND embedded_instagram IS NOT NULL AND embedded_instagram != '' ORDER BY date DESC LIMIT :limit", nativeQuery = true)
-    List<Event> findActiveEventsWithInstagramLimit(@Param("limit") int limit);
+    @Query(value = "SELECT * FROM events WHERE active = true AND embedded_instagram IS NOT NULL AND embedded_instagram != '' ORDER BY date DESC LIMIT ?1", nativeQuery = true)
+    List<Event> findActiveEventsWithInstagramLimit(int limit);
 }

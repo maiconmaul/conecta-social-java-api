@@ -2,11 +2,14 @@ package com.conectasocial.dto.event;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UpdateEventRequest {
     
     @NotBlank(message = "Nome do evento é obrigatório")
@@ -25,7 +28,7 @@ public class UpdateEventRequest {
     @Min(value = 0, message = "Participação deve ser um número positivo")
     private Integer attendance;
     
-    private String embeddedInstagram;
+    private String embedded_instagram;
     
     @NotBlank(message = "Status é obrigatório")
     @Size(max = 20, message = "Status deve ter no máximo 20 caracteres")
@@ -47,10 +50,6 @@ public class UpdateEventRequest {
     @NotBlank(message = "Cidade é obrigatória")
     @Size(max = 30, message = "Cidade deve ter no máximo 30 caracteres")
     private String city;
-    
-    @NotBlank(message = "UF é obrigatória")
-    @Size(max = 2, message = "UF deve ter exatamente 2 caracteres")
-    private String uf;
     
     @NotBlank(message = "Estado é obrigatório")
     @Size(max = 20, message = "Estado deve ter no máximo 20 caracteres")
@@ -107,12 +106,12 @@ public class UpdateEventRequest {
         this.attendance = attendance;
     }
     
-    public String getEmbeddedInstagram() {
-        return embeddedInstagram;
+    public String getEmbedded_instagram() {
+        return embedded_instagram;
     }
     
-    public void setEmbeddedInstagram(String embeddedInstagram) {
-        this.embeddedInstagram = embeddedInstagram;
+    public void setEmbedded_instagram(String embedded_instagram) {
+        this.embedded_instagram = embedded_instagram;
     }
     
     public String getStatus() {
@@ -153,14 +152,6 @@ public class UpdateEventRequest {
     
     public void setCity(String city) {
         this.city = city;
-    }
-    
-    public String getUf() {
-        return uf;
-    }
-    
-    public void setUf(String uf) {
-        this.uf = uf;
     }
     
     public String getState() {

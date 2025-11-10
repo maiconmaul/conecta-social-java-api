@@ -51,7 +51,7 @@ public class Event {
     private Integer attendance;
     
     @Column(name = "embedded_instagram", columnDefinition = "TEXT")
-    private String embeddedInstagram;
+    private String embedded_instagram;
     
     @NotBlank(message = "Status é obrigatório")
     @Size(max = 20, message = "Status deve ter no máximo 20 caracteres")
@@ -78,11 +78,6 @@ public class Event {
     @Size(max = 30, message = "Cidade deve ter no máximo 30 caracteres")
     @Column(name = "city", length = 30, nullable = false)
     private String city;
-    
-    @NotBlank(message = "UF é obrigatória")
-    @Size(max = 2, message = "UF deve ter exatamente 2 caracteres")
-    @Column(name = "uf", length = 2, nullable = false)
-    private String uf;
     
     @NotBlank(message = "Estado é obrigatório")
     @Size(max = 20, message = "Estado deve ter no máximo 20 caracteres")
@@ -116,21 +111,20 @@ public class Event {
     public Event() {}
     
     public Event(String name, String description, LocalDateTime date, String greetingDescription,
-                Integer attendance, String embeddedInstagram, String status,
+                Integer attendance, String embedded_instagram, String status,
                 String street, String neighborhood, String number, String city,
-                String uf, String state, String cep, String complement) {
+                String state, String cep, String complement) {
         this.name = name;
         this.description = description;
         this.date = date;
         this.greetingDescription = greetingDescription;
         this.attendance = attendance;
-        this.embeddedInstagram = embeddedInstagram;
+        this.embedded_instagram = embedded_instagram;
         this.status = status;
         this.street = street;
         this.neighborhood = neighborhood;
         this.number = number;
         this.city = city;
-        this.uf = uf;
         this.state = state;
         this.cep = cep;
         this.complement = complement;
@@ -185,12 +179,12 @@ public class Event {
         this.attendance = attendance;
     }
     
-    public String getEmbeddedInstagram() {
-        return embeddedInstagram;
+    public String getEmbedded_instagram() {
+        return embedded_instagram;
     }
     
-    public void setEmbeddedInstagram(String embeddedInstagram) {
-        this.embeddedInstagram = embeddedInstagram;
+    public void setEmbedded_instagram(String embedded_instagram) {
+        this.embedded_instagram = embedded_instagram;
     }
     
     public String getStatus() {
@@ -231,14 +225,6 @@ public class Event {
     
     public void setCity(String city) {
         this.city = city;
-    }
-    
-    public String getUf() {
-        return uf;
-    }
-    
-    public void setUf(String uf) {
-        this.uf = uf;
     }
     
     public String getState() {

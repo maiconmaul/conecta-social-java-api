@@ -1,64 +1,77 @@
 package com.conectasocial.dto.event;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import com.conectasocial.domain.entity.Event;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class EventResponse {
     
-    private UUID id;
+    private String id;
     private String name;
     private String description;
     private LocalDateTime date;
+    
+    @JsonProperty("greeting_description")
     private String greetingDescription;
+    
     private Integer attendance;
-    private String embeddedInstagram;
+    
+    @JsonProperty("embedded_instagram")
+    private String embedded_instagram;
+    
     private String status;
     private String street;
     private String neighborhood;
     private String number;
     private String city;
-    private String uf;
     private String state;
     private String cep;
     private String complement;
-    private Boolean active;
-    private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
+    private List<LogVolunteerEventResponse> logs;
     
     // Constructors
     public EventResponse() {}
     
     public EventResponse(Event event) {
-        this.id = event.getId();
+        this.id = event.getId() != null ? event.getId().toString() : null;
         this.name = event.getName();
         this.description = event.getDescription();
         this.date = event.getDate();
         this.greetingDescription = event.getGreetingDescription();
         this.attendance = event.getAttendance();
-        this.embeddedInstagram = event.getEmbeddedInstagram();
+        this.embedded_instagram = event.getEmbedded_instagram();
         this.status = event.getStatus();
         this.street = event.getStreet();
         this.neighborhood = event.getNeighborhood();
         this.number = event.getNumber();
         this.city = event.getCity();
-        this.uf = event.getUf();
         this.state = event.getState();
         this.cep = event.getCep();
         this.complement = event.getComplement();
-        this.active = event.getActive();
-        this.createdAt = event.getCreatedAt();
-        this.updatedAt = event.getUpdatedAt();
+        
+        // Mapeia os logs se existirem
+        if (event.getLogs() != null && !event.getLogs().isEmpty()) {
+            this.logs = event.getLogs().stream()
+                    .map(LogVolunteerEventResponse::new)
+                    .collect(Collectors.toList());
+        }
     }
     
     // Getters and Setters
-    public UUID getId() {
+    public String getId() {
         return id;
     }
     
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
+    }
+    
+    public void setId(UUID id) {
+        this.id = id != null ? id.toString() : null;
     }
     
     public String getName() {
@@ -101,12 +114,12 @@ public class EventResponse {
         this.attendance = attendance;
     }
     
-    public String getEmbeddedInstagram() {
-        return embeddedInstagram;
+    public String getEmbedded_instagram() {
+        return embedded_instagram;
     }
     
-    public void setEmbeddedInstagram(String embeddedInstagram) {
-        this.embeddedInstagram = embeddedInstagram;
+    public void setEmbedded_instagram(String embedded_instagram) {
+        this.embedded_instagram = embedded_instagram;
     }
     
     public String getStatus() {
@@ -149,14 +162,6 @@ public class EventResponse {
         this.city = city;
     }
     
-    public String getUf() {
-        return uf;
-    }
-    
-    public void setUf(String uf) {
-        this.uf = uf;
-    }
-    
     public String getState() {
         return state;
     }
@@ -181,27 +186,11 @@ public class EventResponse {
         this.complement = complement;
     }
     
-    public Boolean getActive() {
-        return active;
+    public List<LogVolunteerEventResponse> getLogs() {
+        return logs;
     }
     
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-    
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-    
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-    
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-    
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setLogs(List<LogVolunteerEventResponse> logs) {
+        this.logs = logs;
     }
 }

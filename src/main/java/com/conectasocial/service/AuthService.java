@@ -31,25 +31,25 @@ public class AuthService {
     private PasswordEncoder passwordEncoder;
     
     public LoginResponse login(LoginRequest loginRequest) {
-        Authentication authentication = authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(
-                loginRequest.getEmail(),
-                loginRequest.getPassword()
-            )
-        );
-        
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        Employee employee = employeeRepository.findByEmail(userDetails.getUsername())
-                .orElseThrow(() -> new BadCredentialsException("Usuário não encontrado"));
-        
-        String token = jwtUtil.generateToken(
+            Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                    loginRequest.getEmail(),
+                    loginRequest.getPassword()
+                )
+            );
+            
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            Employee employee = employeeRepository.findByEmail(userDetails.getUsername())
+                    .orElseThrow(() -> new BadCredentialsException("Usuário não encontrado"));
+            
+            String token = jwtUtil.generateToken(
             employee.getId().toString(),
-            employee.getEmail(),
-            employee.getName(),
+                employee.getEmail(),
+                employee.getName(),
             employee.getSurname()
-        );
-        
-        return new LoginResponse(token);
+            );
+            
+            return new LoginResponse(token);
     }
     
     public Employee validateUser(String email, String password) {
