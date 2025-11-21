@@ -43,10 +43,10 @@ public class AuthService {
                     .orElseThrow(() -> new BadCredentialsException("Usuário não encontrado"));
             
             String token = jwtUtil.generateToken(
-            employee.getId().toString(),
+                employee.getId().toString(),
                 employee.getEmail(),
                 employee.getName(),
-            employee.getSurname()
+                employee.getSurname()
             );
             
             return new LoginResponse(token);

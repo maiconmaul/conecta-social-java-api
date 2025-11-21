@@ -6,7 +6,7 @@ spring:
     name: conecta-social-api
   
   datasource:
-    url: jdbc:postgresql://localhost:5433/conecta_social
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5433}/${DB_NAME:conecta_social}
     username: ${DB_USERNAME:postgres}
     password: ${DB_PASSWORD:postgres}
     driver-class-name: org.postgresql.Driver
@@ -49,7 +49,9 @@ management:
 
 springdoc:
   api-docs:
-    path: /api-docs
+    path: /v3/api-docs
   swagger-ui:
     path: /swagger-ui.html
     operationsSorter: method
+    enabled: true
+    urls-primary-name: "API"

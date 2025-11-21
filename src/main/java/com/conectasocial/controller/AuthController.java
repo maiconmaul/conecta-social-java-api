@@ -32,6 +32,8 @@ public class AuthController {
             ApiResponse<LoginResponse> response = ApiResponse.success(loginData);
         return ResponseEntity.ok(response);
         } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace(); 
             ApiResponse<LoginResponse> errorResponse = ApiResponse.error(401, "Credenciais inválidas");
             return ResponseEntity.status(401).body(errorResponse);
         }

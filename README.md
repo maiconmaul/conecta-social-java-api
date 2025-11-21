@@ -122,7 +122,7 @@ A API estará disponível em: `http://localhost:3001`
 
 Para testar a API, use as seguintes credenciais:
 - **Email**: admin@empresa.com
-- **Senha**: password
+- **Senha**: admin123
 
 ## 📚 Documentação da API
 
@@ -139,7 +139,7 @@ Content-Type: application/json
 
 {
   "email": "admin@empresa.com",
-  "password": "password"
+  "password": "admin123"
 }
 ```
 

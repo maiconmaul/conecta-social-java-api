@@ -36,7 +36,7 @@ public class EmployeeController {
     
     @PostMapping
     @Operation(summary = "Criar funcionário", description = "Cria um novo funcionário")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
+    // @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER')")
     public ResponseEntity<EmployeeResponse> createEmployee(@Valid @RequestBody CreateEmployeeRequest request) {
         EmployeeResponse response = employeeService.createEmployee(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -44,7 +44,7 @@ public class EmployeeController {
     
     @GetMapping
     @Operation(summary = "Listar funcionários", description = "Lista todos os funcionários ativos")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER') or hasRole('VOLUNTEER')")
+    // @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER') or hasRole('VOLUNTEER')")
     public ResponseEntity<List<EmployeeResponse>> getAllEmployees() {
         List<EmployeeResponse> employees = employeeService.getAllEmployees();
         return ResponseEntity.ok(employees);

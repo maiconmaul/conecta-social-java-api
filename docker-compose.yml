@@ -19,9 +19,12 @@ services:
     ports:
       - "3001:3001"
     environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: conecta_social
       DB_USERNAME: postgres
       DB_PASSWORD: postgres
-      JWT_SECRET: mySecretKey
+      JWT_SECRET: 89a0fb0fca4e6d6ef5e0c57ea291ac4c7c92929b3ee1e086cf37b7ad66b2c0a1
     depends_on:
       - postgres
     networks:

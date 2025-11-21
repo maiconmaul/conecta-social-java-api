@@ -18,21 +18,22 @@ echo "✅ Java e Maven encontrados"
 
 # Compilar o projeto
 echo "🔨 Compilando o projeto..."
-mvn clean compile
-
-if [ $? -ne 0 ]; then
-    echo "❌ Erro na compilação"
-    exit 1
-fi
+docker compose down
+mvn clean package -DskipTests
 
 echo "✅ Compilação concluída"
 
 # Executar a aplicação
 echo "🎯 Iniciando a aplicação..."
-echo "📖 Documentação disponível em: http://localhost:3001/api/swagger-ui.html"
-echo "🔍 Health check em: http://localhost:3001/api/"
+echo "📖 Documentação disponível em: http://localhost:3001/swagger-ui/index.html"
+echo "🔍 Health check em: http://localhost:3001/"
 echo ""
 echo "Pressione Ctrl+C para parar a aplicação"
 echo ""
 
-mvn spring-boot:run
+docker-compose up --build
+
+if [ $? -ne 0 ]; then
+    echo "❌ Erro na compilação"
+    exit 1
+fi

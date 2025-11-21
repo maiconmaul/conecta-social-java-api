@@ -15,4 +15,10 @@ public class PasswordController {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         return encoder.encode(password);
     }
+
+    @GetMapping("/check")
+    public boolean checkPassword(@RequestParam String password, @RequestParam String hash) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        return encoder.matches(password, hash);
+    }
 }
